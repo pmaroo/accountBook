@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitTheWeb Admin Portal</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <p class="eyebrow">Admin Portal</p>
+          <h1>FitTheWeb 가계부 관리자</h1>
+          <p class="brand-copy">
+            앱과 분리된 웹 화면에서 예산, 목표, 연동 상태, 백업 데이터를 관리합니다.
+          </p>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-link active" data-section="dashboard">대시보드</button>
+          <button class="nav-link" data-section="categories">카테고리</button>
+          <button class="nav-link" data-section="goals">목표</button>
+          <button class="nav-link" data-section="providers">연동 관리</button>
+          <button class="nav-link" data-section="transactions">거래 검수</button>
+          <button class="nav-link" data-section="settings">앱 설정</button>
+        </nav>
+
+        <div class="sidebar-actions">
+          <label class="file-trigger">
+            백업 JSON 불러오기
+            <input id="backup-file-input" type="file" accept=".json,application/json" />
+          </label>
+          <button id="export-backup-button" class="ghost-button">수정본 백업 내보내기</button>
+          <button id="reset-demo-button" class="ghost-button">관리자 샘플로 초기화</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Separated Web Console</p>
+            <h2>운영자 전용 관리 화면</h2>
+            <p class="hero-copy">
+              앱 백업 파일을 읽어 운영값을 점검하고, 수정된 데이터를 다시 백업 형태로 내려받을 수 있습니다.
+            </p>
+          </div>
+          <div class="hero-panel">
+            <span class="status-dot"></span>
+            <div>
+              <strong id="storage-badge">브라우저 임시 저장 사용 중</strong>
+              <p id="last-saved-label">저장 상태를 확인하는 중입니다.</p>
+            </div>
+          </div>
+        </header>
+
+        <section id="dashboard" class="section active">
+          <div class="summary-grid" id="summary-grid"></div>
+
+          <div class="panel-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Budget Pressure</p>
+                  <h3>예산 집중 구간</h3>
+                </div>
+              </div>
+              <div id="budget-heatmap" class="stack-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Sync Health</p>
+                  <h3>연동 상태 모니터링</h3>
+                </div>
+              </div>
+              <div id="provider-health" class="stack-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="categories" class="section">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Budget Categories</p>
+              <h3>카테고리 관리</h3>
+            </div>
+            <button id="add-category-button" class="primary-button">카테고리 추가</button>
+          </div>
+          <div id="categories-table" class="table-shell"></div>
+        </section>
+
+        <section id="goals" class="section">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Savings Goals</p>
+              <h3>저축 목표 관리</h3>
+            </div>
+            <button id="add-goal-button" class="primary-button">목표 추가</button>
+          </div>
+          <div id="goals-table" class="table-shell"></div>
+        </section>
+
+        <section id="providers" class="section">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Integration Control</p>
+              <h3>연동 상태 및 인증 단계</h3>
+            </div>
+          </div>
+          <div id="providers-grid" class="provider-grid"></div>
+        </section>
+
+        <section id="transactions" class="section">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Transaction Review</p>
+              <h3>거래 검수</h3>
+            </div>
+            <div class="toolbar">
+              <input id="transaction-search" type="search" placeholder="제목 또는 결제처 검색" />
+              <select id="transaction-type-filter">
+                <option value="all">전체</option>
+                <option value="expense">지출</option>
+                <option value="income">수입</option>
+                <option value="transfer">이체</option>
+              </select>
+            </div>
+          </div>
+          <div id="transactions-table" class="table-shell"></div>
+        </section>
+
+        <section id="settings" class="section">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">App Policies</p>
+              <h3>앱 운영 설정</h3>
+            </div>
+          </div>
+          <form id="settings-form" class="settings-form"></form>
+        </section>
+      </main>
+    </div>
+
+    <template id="table-template">
+      <table class="data-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
